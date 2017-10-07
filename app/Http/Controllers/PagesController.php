@@ -27,7 +27,9 @@ class PagesController extends Controller
 
     public function mensaje(CreateMessageRequest $request){
 
-    	return $request->all();
+    	$data = $request->all();
+
+    	return back()->with('info', 'Tu mensaje ha sido enviado correctamente');
     }
 
 	public function saludo($nombre = "Invitado"){
