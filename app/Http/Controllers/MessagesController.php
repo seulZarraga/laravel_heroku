@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use DB;
 
+use App\Message;
+
 use Carbon\Carbon;
 
 class MessagesController extends Controller
@@ -19,7 +21,7 @@ class MessagesController extends Controller
     {
         //
 
-        $messages = DB::table('messages')->get();
+        $messages = Message::all();
 
         return view('messages.index', compact('messages'));
     }
@@ -44,18 +46,27 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        // Guardar mensaje
+        /* Guardar mensaje */
 
-        DB::table('messages')->insert(["nombre" => $request->input('nombre'), 
-                                      "email" => $request->input('email'),
-                                      "mensaje" => $request->input('mensaje'), 
-                                      "created_at" => Carbon::now(),
-                                      "updated_at" => Carbon::now(),
-                                     ]);
+        /*Primera forma de guardar con eloquent*/
 
-        // Redireccionar
+        // $message = new Message;
 
-        return redirect()->route('messages.index');
+        // $message->nombre = $request->input('nombre');
+
+        // $message->email = $request->input('email');
+
+        // $message->mensaje = $request->input('mensaje');
+
+        // $message->save();
+
+        /*Segunda forma de guarda con eloquent*/
+
+        Message::create($request->all());
+
+        /* Redireccionar */
+
+        return redirect()->route('mensajes.index');
     }
 
     /**
@@ -67,7 +78,7 @@ class MessagesController extends Controller
     public function show($id)
     {
         //
-        $message = DB::table('messages')->where('id', $id)->first();
+        $message = Message::findOrFail($id);
 
         return view('messages.show_message', compact('message'));
     }
@@ -81,7 +92,7 @@ class MessagesController extends Controller
     public function edit($id)
     {
         //
-        $message = DB::table('messages')->where('id', $id)->first();
+       $message = Message::findOrFail($id);
 
         return view('messages.edit_message', compact('message'));
     }
@@ -95,14 +106,13 @@ class MessagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //edit
-        $message = DB::table('messages')->where('id', $id)->update(["nombre" => $request->input('nombre'), 
-                                                                    "email" => $request->input('email'),
-                                                                    "mensaje" => $request->input('mensaje'), 
-                                                                    "updated_at" => Carbon::now(),
-                                                                   ]);
-        //redirect 
-        return redirect()->route('messages.index');
+        /*edit*/
+
+        Message::findOrFail($id)->update($request->all());
+
+        /*redirect*/ 
+
+        return redirect()->route('mensajes.index');
     }
 
     /**
@@ -113,10 +123,12 @@ class MessagesController extends Controller
      */
     public function destroy($id)
     {
-        //delete
-        $message = DB::table('messages')->where('id', $id)->delete();
+        /*delete*/
+        
+        Message::findOrFail($id)->delete();
 
-        //redirect 
-        return redirect()->route('messages.index');
+        /*redirect*/
+
+        return redirect()->route('mensajes.index');
     }
 }
