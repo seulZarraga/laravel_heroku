@@ -33,9 +33,25 @@
 		?>
 		<nav>
 			<a class="{{ active_menu('/') }}" href="{{ route('home') }}">Home</a>
+
 			<a class="{{ active_menu('saludos/*') }}" href="{{ route('saludos', 'Seul') }}">Saludos</a>
+
 			<a class="{{ active_menu('mensajes/*') }}" href="{{ route('mensajes.create') }}">Contactos</a>
-			<a class="{{ active_menu('mensajes') }}" href="{{ route('mensajes.index') }}">Mensajes</a>
+
+			@if (auth()->check())
+				
+				<a class="{{ active_menu('mensajes') }}" href="{{ route('mensajes.index') }}">Mensajes</a>
+
+				<a href="/logout">Cerrar Sesion de {{ auth()->user()->name }}</a>
+
+			@endif
+
+			@if (auth()->guest())
+
+				<a class="{{ active_menu('login') }}" href="/login">Login</a>
+
+			@endif
+			
 		</nav>
 	</header>
 
