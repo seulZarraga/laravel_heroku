@@ -12,7 +12,7 @@
 
 @else
 
-<form method="POST" action="contactos">
+<form method="POST" action="{{ route('messages.store') }}">
 	{{ csrf_field() }}
 	<p>
 		<label for="nombre">Nombre
