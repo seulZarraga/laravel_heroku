@@ -9,22 +9,22 @@
 	{{ csrf_field() }}
 	<p>
 		<label for="nombre">Nombre
-			<input type="text" name="nombre" value="{{ $message->nombre }}">
+			<input class="form-control" type="text" name="nombre" value="{{ $message->nombre }}">
 			{!! $errors->first('nombre', '<span class="error">:message</span>') !!}
 		</label>
 	</p>
 	<p>
 		<label for="email">E-mail
-			<input type="email" name="email" value=" {{ $message->email }} ">
+			<input class="form-control" type="email" name="email" value=" {{ $message->email }} ">
 			{!! $errors->first('email', '<span class="error">:message</span>') !!}
 		</label>
 	</p>
 	<p>
 		<label for="mensaje">Mensaje
-			<textarea name="mensaje" value=" {{ $message->mensaje }} ">{{ $message->mensaje }}</textarea>
+			<textarea class="form-control" name="mensaje" value=" {{ $message->mensaje }} ">{{ $message->mensaje }}</textarea>
 			{!! $errors->first('mensaje', '<span class="error">:message</span>') !!}
 		</label>
 	</p>
-	<input type="submit" name="enviar" value="enviar">
+	<input class="btn btn-primary" type="submit" name="enviar" value="enviar">
 </form>
 @stop
